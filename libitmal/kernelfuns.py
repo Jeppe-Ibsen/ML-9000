@@ -60,7 +60,7 @@ def StartupSequence_GPU(verbose=False):
 	assert n > -1, f"something went wrong in startup-sequence, n={n} should be > -1"	
 	return n
 
-########################################
+####################
 
 def TestAll():
 	print("(not tests yet)")

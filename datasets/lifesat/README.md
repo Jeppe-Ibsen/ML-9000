@@ -1,9 +1,9 @@
 # Life satisfaction and GDP per capita
-## Life satisfaction
-### Source
+# Life satisfaction
+## Source
 This dataset was obtained from the OECD's website at: http://stats.oecd.org/index.aspx?DataSetCode=BLI
 
-### Data description
+## Data description
 
     Int64Index: 3292 entries, 0 to 3291
     Data columns (total 17 columns):
@@ -27,7 +27,7 @@ This dataset was obtained from the OECD's website at: http://stats.oecd.org/inde
     dtypes: float64(3), int64(1), object(13)
     memory usage: 462.9+ KB
 
-### Example usage using python Pandas
+## Example usage using python Pandas
 
     >>> life_sat = pd.read_csv("oecd_bli_2015.csv", thousands=',')
     
@@ -66,11 +66,11 @@ This dataset was obtained from the OECD's website at: http://stats.oecd.org/inde
     dtypes: float64(24)
     memory usage: 7.2+ KB
 
-## GDP per capita
-### Source
+# GDP per capita
+## Source
 Dataset obtained from the IMF's website at: http://goo.gl/j1MSKe
 
-### Data description
+## Data description
 
     Int64Index: 190 entries, 0 to 189
     Data columns (total 7 columns):
@@ -84,7 +84,7 @@ Dataset obtained from the IMF's website at: http://goo.gl/j1MSKe
     dtypes: float64(2), object(5)
     memory usage: 11.9+ KB
 
-### Example usage using python Pandas
+## Example usage using python Pandas
 
     >>> gdp_per_capita = pd.read_csv(
     ...     datapath+"gdp_per_capita.csv", thousands=',', delimiter='\t',

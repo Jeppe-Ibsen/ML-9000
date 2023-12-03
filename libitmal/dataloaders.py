@@ -33,8 +33,8 @@ def MNIST_PlotDigit(data):
 	plt.imshow(image, cmap = matplotlib.cm.binary, interpolation="nearest")
 	plt.axis("off")
 
-## CEF: A production-code ready version of get MNIST
-##      Can run in four three different modes, 0=auto, 1=tensorflow.keras, 2=keras and 3=fetch_openml (slow and disfavored)
+# CEF: A production-code ready version of get MNIST
+#      Can run in four three different modes, 0=auto, 1=tensorflow.keras, 2=keras and 3=fetch_openml (slow and disfavored)
 def MNIST_GetDataSet(reshape784=True, load_mode=0):
 	# NOTE: notice that X and y are defined inside if's, not in outer scope as in C++, strange
 	# NOTE: hardcoded sizes, 70000 x 28 x 28 or 70000 x 784
@@ -142,11 +142,11 @@ def TrainTestSplit(X, y, N, shuffle=True, verbose=False):
 	
 	return X_train, X_test, y_train, y_test
 
-######################################################################################################
+###################################################
 # 
 # TESTS
 #
-######################################################################################################
+###################################################
 
 def Test_IRIS_GetDataSet(debug=False, verbose=False):
 	if debug:
