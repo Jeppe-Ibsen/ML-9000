@@ -87,7 +87,7 @@ jobs:
       - name: Copy All HTML to mergedNotebooks/GITMAL
         run: |
             if [ -d "Html" ]; then cp -r Html/. mergednotebooks/GITMAL; fi
-            
+
       - name: merge O1
         run: nbmerge L01/intro.ipynb L01/modules_and_classes.ipynb L02/cost_function.ipynb L02/dummy_classifier.ipynb L02/performance_metrics.ipynb > mergednotebooks/O1.ipynb
 
@@ -95,7 +95,7 @@ jobs:
         run: nbmerge L03/supergruppe_diskussion.ipynb L04/dataanalyse.ipynb L04/pipelines.ipynb L05/linear_regression_1.ipynb L05/gradient_descent.ipynb L06/ann.ipynb > mergednotebooks/O2.ipynb
 
       - name: merge O3
-        run: nbmerge L07/cnn.ipynb L08/generalization_error.ipynb L08/capacity_under_overfitting.ipynb L09/gridsearch.ipynb L09/MinistCompetion.ipynb L10/cnn2.ipynb > mergednotebooks/O3.ipynb
+        run: nbmerge L07/cnn.ipynb L08/generalization_error.ipynb L08/capacity_under_overfitting.ipynb L09/gridsearch.ipynb L09/regulizers.ipynb L10/cnn2.ipynb > mergednotebooks/O3.ipynb
 
       - name: merge all notebooks into one notebook
         run: nbmerge mergednotebooks/O1.ipynb mergednotebooks/O2.ipynb mergednotebooks/O3.ipynb > mergednotebooks/index.ipynb
