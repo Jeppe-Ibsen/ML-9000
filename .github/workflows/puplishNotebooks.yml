@@ -1,0 +1,116 @@
+# This is a basic workflow to help you get started with Actions
+name: Publish notebooks to build branch
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+      - PostNotebooks
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nbmerge
+          pip install nbconvert
+          pip install beautifulsoup4
+
+
+      - name: Adjust PATH
+        run: echo "$GITHUB_WORKSPACE/.pip-modules/bin" >> $GITHUB_PATH
+
+      - name: Create mergednotebooks if not exists
+        run: mkdir -p mergednotebooks
+
+      - name: Create mergednotebooks/Figs if not exists
+        run: mkdir -p mergednotebooks/Figs
+
+      # in each folder L01 - L14, copy all files in Figs subfolder to mergednotebooks/Figs folder if folder Figs exists
+      - name: Copy all files in Figs supfolder to mergednotebooks/ folder
+        run: |
+          if [ -d "L01/Figs" ]; then cp -r L01/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L02/Figs" ]; then cp -r L02/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L03/Figs" ]; then cp -r L03/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L04/Figs" ]; then cp -r L04/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L05/Figs" ]; then cp -r L05/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L06/Figs" ]; then cp -r L06/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L07/Figs" ]; then cp -r L07/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L08/Figs" ]; then cp -r L08/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L09/Figs" ]; then cp -r L09/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L10/figs" ]; then cp -r L10/figs/. mergednotebooks/Figs; fi
+          if [ -d "L11/Figs" ]; then cp -r L11/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L12/Figs" ]; then cp -r L12/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L13/Figs" ]; then cp -r L13/Figs/. mergednotebooks/Figs; fi
+          if [ -d "L14/Figs" ]; then cp -r L14/Figs/. mergednotebooks/Figs; fi
+
+      - name: Copy All Logs to Logs Supfolder
+        run: |
+            if [ -d "L01/Logs" ]; then cp -r L01/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L02/Logs" ]; then cp -r L02/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L03/Logs" ]; then cp -r L03/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L04/Logs" ]; then cp -r L04/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L05/Logs" ]; then cp -r L05/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L06/Logs" ]; then cp -r L06/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L07/Logs" ]; then cp -r L07/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L08/Logs" ]; then cp -r L08/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L09/Logs" ]; then cp -r L09/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L10/Logs" ]; then cp -r L10/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L11/Logs" ]; then cp -r L11/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L12/Logs" ]; then cp -r L12/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L13/Logs" ]; then cp -r L13/Logs/. mergednotebooks/Logs; fi
+            if [ -d "L14/Logs" ]; then cp -r L14/Logs/. mergednotebooks/Logs; fi
+      - name: Copy All HTML to mergedNotebooks/GITMAL
+        run: |
+            if [ -d "Html" ]; then cp -r Html/. mergednotebooks/GITMAL; fi
+            
+      - name: merge O1
+        run: nbmerge L01/intro.ipynb L01/modules_and_classes.ipynb L02/cost_function.ipynb L02/dummy_classifier.ipynb L02/performance_metrics.ipynb > mergednotebooks/O1.ipynb
+
+      - name: merge O2
+        run: nbmerge L03/supergruppe_diskussion.ipynb L04/dataanalyse.ipynb L04/pipelines.ipynb L05/linear_regression_1.ipynb L05/gradient_descent.ipynb L06/ann.ipynb > mergednotebooks/O2.ipynb
+
+      - name: merge O3
+        run: nbmerge L07/cnn.ipynb L08/generalization_error.ipynb L08/capacity_under_overfitting.ipynb L09/gridsearch.ipynb L09/MinistCompetion.ipynb L10/cnn2.ipynb > mergednotebooks/O3.ipynb
+
+      - name: merge all notebooks into one notebook
+        run: nbmerge mergednotebooks/O1.ipynb mergednotebooks/O2.ipynb mergednotebooks/O3.ipynb > mergednotebooks/index.ipynb
+
+      - name: Convert all mergednotebooks/ notebook to html
+        run: jupyter nbconvert --to html mergednotebooks/O1.ipynb mergednotebooks/O2.ipynb mergednotebooks/O3.ipynb mergednotebooks/index.ipynb
+
+      - name: Transform HTML to have ToC
+        # run script to transform html to have ToC
+        run: python3 transform_html.py
+
+
+        # deploy to build branch
+      - name: Deploy to GHPages branch
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: GHPages
+          folder: mergednotebooks
